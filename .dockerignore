@@ -1,0 +1,11 @@
+compose/
+.git/
+.venv/
+
+*.pyc
+
+.flake8
+.gitignore
+.prettierrc.toml
+.pylintrc
+query_debugger.py

@@ -1,0 +1,16 @@
+services:
+    main-app:
+        build:
+            context: ..
+            dockerfile: Dockerfile
+        container_name: main-app
+        ports:
+            - ${DJANGO_PORT}:8000
+        command: "sh entrypoint.sh python manage.py runserver 0.0.0.0:${DJANGO_PORT}"
+        # command: "tail -f /dev/null"
+        env_file:
+            - ../.env
+        depends_on:
+            - postgres
+        volumes:
+            - ../:/app
