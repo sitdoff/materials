@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # apps
+    "core.apps.catalog.apps.CatalogConfig",
     # в файле apps.py приложения важно указать name как путь к папке приложения
     # batts
 ]
