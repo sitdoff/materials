@@ -3,7 +3,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 
 class CategoryModel(MPTTModel):
-    title = models.CharField(max_length=255, verbose_name="Наименование категории")
+    title = models.CharField(max_length=255, unique=True, verbose_name="Наименование категории")
     parent = TreeForeignKey(
         "self",
         on_delete=models.PROTECT,
