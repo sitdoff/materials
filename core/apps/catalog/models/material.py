@@ -7,7 +7,7 @@ class MaterialModel(models.Model):
     title = models.CharField(max_length=255, verbose_name="Наименование")
     category = models.ForeignKey(
         CategoryModel,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         related_name="materials",
         verbose_name="Категория",
     )
