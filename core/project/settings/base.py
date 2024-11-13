@@ -144,5 +144,23 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {}
 
+APPEND_SLASH = False
 
 MPTT_ADMIN_LEVEL_INDENT = 20
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django.db.backends": {
+            "level": "DEBUG",  # Показывать запросы к базе данных
+            "handlers": ["console"],
+        },
+    },
+}
