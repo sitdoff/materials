@@ -167,3 +167,10 @@ LOGGING = {
 
 DOCUMENT_ROOT = BASE_DIR / "documents/catalog"
 DOCUMENT_NAME_TIME_FORMAT = "%d%m%Y_%H%M%S"
+
+CELERY_BROKER_URL = f"redis://{env.str("REDIS_HOST")}:{env.int("REDIS_PORT")}/0"
+
+# CELERY_RESULT_BACKEND = "redis://redis:6379/0"
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
