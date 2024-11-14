@@ -164,3 +164,6 @@ LOGGING = {
         },
     },
 }
+
+DOCUMENT_ROOT = BASE_DIR / "documents/catalog"
+DOCUMENT_NAME_TIME_FORMAT = "%d%m%Y_%H%M%S"

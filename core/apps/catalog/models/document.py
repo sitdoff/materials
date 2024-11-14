@@ -11,5 +11,15 @@ class DocumentModel(TimedBaseModel):
         ERROR = "error", "Ошибка обработки"
 
     title = models.CharField(max_length=255, verbose_name="Наименование документа")
-    file = models.FileField(upload_to="documents", verbose_name="Файл документа")
-    status = models.CharField(max_length=30, choices=Status.choices, verbose_name="Статус обработки")
+    file_path = models.CharField(max_length=1024, verbose_name="Файл документа")
+    status = models.CharField(
+        max_length=30,
+        choices=Status.choices,
+        default=Status.NOT_PROCESSED,
+        verbose_name="Статус обработки",
+    )
+
+    class Meta:
+        verbose_name = "Документ"
+        verbose_name_plural = "Документы"
+        # TODO задать индексы

@@ -4,6 +4,8 @@ from core.apps.catalog.models import DocumentModel
 
 
 class DocumentSerializer(serializers.ModelSerializer):
-    class Model:
+    status = serializers.CharField(read_only=True)
+
+    class Meta:
         model = DocumentModel
-        fields = ["id", "title", "file", "status", "created_at", "updated_at"]
+        fields = ["id", "title", "file_path", "status", "created_at"]
