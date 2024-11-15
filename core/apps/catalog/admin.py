@@ -6,7 +6,7 @@ from core.apps.catalog.models import CategoryModel, DocumentModel, MaterialModel
 
 @admin.register(MaterialModel)
 class MaterialModelAdmin(admin.ModelAdmin):
-    list_display = ("title", "code", "price")
+    list_display = ("title", "category", "code", "price")
 
 
 @admin.register(CategoryModel)
