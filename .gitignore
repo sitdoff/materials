@@ -164,3 +164,4 @@ static/*
 !static/.gitkeep
 poetry.lock
 documents/catalog
+documents
