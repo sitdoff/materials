@@ -1,0 +1,126 @@
+[
+  {
+    "model": "catalog.categorymodel",
+    "pk": 1,
+    "fields": {
+      "title": "Комплектующие и запчасти",
+      "parent": null,
+      "lft": 1,
+      "rght": 14,
+      "tree_id": 1,
+      "level": 0
+    }
+  },
+  {
+    "model": "catalog.categorymodel",
+    "pk": 2,
+    "fields": {
+      "title": "Детали весьма нестандартные",
+      "parent": 1,
+      "lft": 2,
+      "rght": 7,
+      "tree_id": 1,
+      "level": 1
+    }
+  },
+  {
+    "model": "catalog.categorymodel",
+    "pk": 3,
+    "fields": {
+      "title": "Насосы и копрессоры стандартные",
+      "parent": 2,
+      "lft": 3,
+      "rght": 4,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "catalog.categorymodel",
+    "pk": 4,
+    "fields": {
+      "title": "Подшипники",
+      "parent": 2,
+      "lft": 5,
+      "rght": 6,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "catalog.categorymodel",
+    "pk": 13,
+    "fields": {
+      "title": "Изделия крепежные",
+      "parent": 1,
+      "lft": 8,
+      "rght": 13,
+      "tree_id": 1,
+      "level": 1
+    }
+  },
+  {
+    "model": "catalog.categorymodel",
+    "pk": 14,
+    "fields": {
+      "title": "Болты",
+      "parent": 13,
+      "lft": 9,
+      "rght": 10,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "catalog.categorymodel",
+    "pk": 15,
+    "fields": {
+      "title": "Винты",
+      "parent": 13,
+      "lft": 11,
+      "rght": 12,
+      "tree_id": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "catalog.materialmodel",
+    "pk": 50,
+    "fields": {
+      "title": "винт с правой резьбой",
+      "category": 15,
+      "code": "123",
+      "price": "10.00"
+    }
+  },
+  {
+    "model": "catalog.materialmodel",
+    "pk": 51,
+    "fields": {
+      "title": "винт с левой резьбой",
+      "category": 15,
+      "code": "1234",
+      "price": "10.00"
+    }
+  },
+  {
+    "model": "catalog.materialmodel",
+    "pk": 52,
+    "fields": {
+      "title": "винт с резьбой по середине",
+      "category": 15,
+      "code": "12345",
+      "price": "10.00"
+    }
+  },
+  {
+    "model": "catalog.materialmodel",
+    "pk": 53,
+    "fields": {
+      "title": "болт для хитрый",
+      "category": 14,
+      "code": "1пп223",
+      "price": "7.35"
+    }
+  }
+]
