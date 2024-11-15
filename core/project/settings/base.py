@@ -144,7 +144,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {}
 
-APPEND_SLASH = False
+APPEND_SLASH = True
 
 MPTT_ADMIN_LEVEL_INDENT = 20
 
@@ -165,7 +165,7 @@ LOGGING = {
     },
 }
 
-DOCUMENT_ROOT = BASE_DIR / "documents/catalog"
+DOCUMENT_ROOT = BASE_DIR / "documents"
 DOCUMENT_NAME_TIME_FORMAT = "%d%m%Y_%H%M%S"
 
 CELERY_BROKER_URL = f"redis://{env.str("REDIS_HOST")}:{env.int("REDIS_PORT")}/0"
@@ -174,3 +174,9 @@ CELERY_BROKER_URL = f"redis://{env.str("REDIS_HOST")}:{env.int("REDIS_PORT")}/0"
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
+CELERY_BROKER_TRANSPORT_OPTIONS = {
+    "max_retries": None,
+    "interval_start": 0.1,
+    "interval_step": 0.5,
+    "interval_max": 60.0,
+}
