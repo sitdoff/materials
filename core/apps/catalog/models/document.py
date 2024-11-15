@@ -15,7 +15,7 @@ class DocumentModel(TimedBaseModel):
     status = models.CharField(
         max_length=30,
         choices=Status.choices,
-        default=Status.NOT_PROCESSED,
+        default=Status.PROCESSING,
         verbose_name="Статус обработки",
     )
 
