@@ -4,6 +4,7 @@ from core.apps.catalog.models import DocumentModel
 
 
 class DocumentSerializer(serializers.ModelSerializer):
+    file_path = serializers.CharField(write_only=True)
     status = serializers.CharField(read_only=True)
 
     class Meta:
