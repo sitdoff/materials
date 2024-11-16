@@ -17,7 +17,9 @@ class MaterialModel(models.Model):
     class Meta:
         verbose_name = "Материал"
         verbose_name_plural = "Материалы"
-        # TODO задать индексы
+        indexes = [
+            models.Index(fields=["price"], name="material_price_idx"),
+        ]
 
     def __str__(self) -> str:
         return f"Material: Category-{self.title}-{self.code}"
