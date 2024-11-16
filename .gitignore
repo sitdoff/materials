@@ -165,3 +165,7 @@ static/*
 poetry.lock
 documents/catalog
 documents
+.flake8
+.rettierrc.toml
+.pylintrc
+query_debugger.py
