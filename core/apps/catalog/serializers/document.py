@@ -1,9 +1,10 @@
 from rest_framework import serializers
 
 from core.apps.catalog.models import DocumentModel
+from core.apps.common.serializers import BaseModelSerializer
 
 
-class DocumentSerializer(serializers.ModelSerializer):
+class DocumentSerializer(BaseModelSerializer):
     file_path = serializers.CharField(write_only=True)
     status = serializers.CharField(read_only=True)
 
