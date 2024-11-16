@@ -1,5 +1,0 @@
-[flake8]
-ignore = W293, W391, E203, W503
-max-line-length = 120
-inline-quotes = "
-exclude = .git, __pycache__, env, venv, .venv, myvenv
