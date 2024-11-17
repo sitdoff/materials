@@ -39,7 +39,7 @@ app-logs: ## Показать логи приложения в контейне�
 
 .PHONY: app-down
 app-down: ## Остановить приложение в контейнере
-		${DC} -f ${APP_FILE} -f ${STORAGES_FILE} down
+		${DC} -f ${APP_FILE} -f ${STORAGES_FILE} -f ${CELERY_FILE} down
 
 .PHONY: migrations
 migrations: ## Создание миграций в контейнере
