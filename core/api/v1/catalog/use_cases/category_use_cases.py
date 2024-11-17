@@ -27,8 +27,8 @@ class ListCategoriesUseCase(CategoryUseCaseBase):
 
 
 class TreeCategoriesUseCase(ListCategoriesUseCase):
-    def __init__(self):
-        super().__init__(serializer=TreeCategorySerializer)
+    def __init__(self, service=None, serializer=TreeCategorySerializer):
+        super().__init__(service=service, serializer=serializer)
 
     def execute(self):
         categories = self.service.tree_categories()
