@@ -42,7 +42,7 @@ docker compose \
       -f compose/app.yaml \
       -f compose/storages.yaml \
       -f compose/celery.yaml \
-      --env-file .env up -d --build
+      --env-file .env up -d
 
 # Или используем команду make app, если пользуетесь утилитой make.
 ```
