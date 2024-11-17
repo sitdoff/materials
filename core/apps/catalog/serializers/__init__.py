@@ -2,6 +2,7 @@ __all__ = (
     "CategorySerializer",
     "MaterialSerializer",
     "DocumentSerializer",
+    "TreeCategorySerializer",
 )
 
 from .category import *

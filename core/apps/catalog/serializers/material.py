@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.apps.catalog.models import CategoryModel, MaterialModel
+from core.apps.catalog.models import MaterialModel
 
 
 class MaterialSerializer(serializers.ModelSerializer):

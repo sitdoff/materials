@@ -22,4 +22,3 @@ class DocumentModel(TimedBaseModel):
     class Meta:
         verbose_name = "Документ"
         verbose_name_plural = "Документы"
-        # TODO задать индексы

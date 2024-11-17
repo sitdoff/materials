@@ -14,6 +14,7 @@ __all__ = (
     "TreeCategoriesUseCase",
     # documents
     "UploadDocumentUseCase",
+    "CheckDocumentStatusUseCase",
 )
 
 from .category_use_cases import *
