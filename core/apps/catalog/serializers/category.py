@@ -11,6 +11,7 @@ class CategorySerializer(BaseModelSerializer):
     class Meta:
         model = CategoryModel
         fields = ("id", "title", "level", "children", "materials")
+        read_only_fields = ("children", "materials")
 
 
 class TreeCategorySerializer(BaseModelSerializer):
