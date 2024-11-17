@@ -56,3 +56,7 @@ superuser: ## Создать суперюзера в контейнере
 .PHONY: collectstatic
 collectstatic: ## Собрать статические файлы в контейнере
 		${EXEC} ${APP_CONTAINER} ${MANAGE_PY} collectstatic
+	
+.PHONY: pytest
+pytest: ## Запуск тестов
+	${EXEC} ${APP_CONTAINER} pytest -vvs
