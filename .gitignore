@@ -164,7 +164,6 @@ static/*
 !static/.gitkeep
 poetry.lock
 documents/catalog
-documents
 .flake8
 .pylintrc
 query_debugger.py

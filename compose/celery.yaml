@@ -10,3 +10,8 @@ services:
         depends_on:
             - postgres
             - redis
+        volumes:
+            - like_s3:/app/documents
+
+volumes:
+    like_s3:

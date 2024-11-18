@@ -11,3 +11,8 @@ services:
             - ../.env
         depends_on:
             - postgres
+        volumes:
+            - like_s3:/app/documents
+
+volumes:
+    like_s3:
