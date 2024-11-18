@@ -6,7 +6,7 @@ services:
         container_name: main-app
         ports:
             - ${DJANGO_PORT}:8000
-        command: "sh entrypoint.sh gunicorn core.project.wsgi:application --bind 0.0.0.0:${DJANGO_PORT} --workers 4 --log-level info --timeout 600"
+        command: "sh entrypoint.sh gunicorn core.project.wsgi:application -c gunicorn.conf.py --bind 0.0.0.0:${DJANGO_PORT}"
         env_file:
             - ../.env
         depends_on:
