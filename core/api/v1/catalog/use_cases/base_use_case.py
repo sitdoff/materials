@@ -13,6 +13,7 @@ from core.apps.catalog.serializers import (
 
 
 class UseCaseBase(ABC):
+
     @abstractmethod
     def execute(self):
         pass
