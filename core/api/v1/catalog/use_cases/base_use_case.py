@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 from core.api.v1.catalog.services import (
     CategoryService,
@@ -13,7 +13,9 @@ from core.apps.catalog.serializers import (
 
 
 class UseCaseBase(ABC):
-    pass
+    @abstractmethod
+    def execute(self):
+        pass
 
 
 class CategoryUseCaseBase(UseCaseBase):
