@@ -41,7 +41,8 @@ def test_tree_categories_build_category_tree():
     mock_category_1.children_list = [mock_category_2, mock_category_3]
     categories = [mock_category_1, mock_category_2, mock_category_3]
 
-    tree = TreeCategoriesUseCase.build_category_tree(categories)
+    use_case = TreeCategoriesUseCase()
+    tree = use_case.build_category_tree(categories)
 
     assert len(tree) == 1
     assert tree[0].id == 1
