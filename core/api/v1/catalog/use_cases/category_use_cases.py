@@ -28,36 +28,9 @@ class TreeCategoriesUseCase(ListCategoriesUseCase):
 
     def execute(self):
         categories = self.service.tree_categories()
-        tree = self.build_category_tree(categories)
-        self.set_tree_total_prices(tree)
+        tree = self.service.build_category_tree(categories)
+        self.service.set_tree_total_prices(tree)
         return self.serializer(instance=tree, many=True).data
-
-    def build_category_tree(self, categories):
-        category_dict = {category.id: category for category in categories}
-        tree = []
-
-        for category in categories:
-            if category.parent_id:
-                parent = category_dict[category.parent_id]
-                if not hasattr(parent, "children_list"):
-                    parent.children_list = []
-                parent.children_list.append(category)
-            else:
-                tree.append(category)
-
-        return tree
-
-    def set_tree_total_prices(self, queryset):
-        queryset_total_price = 0
-        for category in queryset:
-            if not hasattr(category, "children_list"):
-                queryset_total_price += category.total_price
-            else:
-                category_total_price = self.set_tree_total_prices(category.children_list)
-                category.total_price = category_total_price
-                queryset_total_price += category_total_price
-
-        return queryset_total_price
 
 
 class RetrieveByIdCategoryUseCase(CategoryUseCaseBase):
