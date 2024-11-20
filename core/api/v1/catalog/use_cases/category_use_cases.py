@@ -2,8 +2,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import ProtectedError
 from rest_framework.exceptions import ValidationError
 
-from core.apps.catalog.serializers.category import TreeCategorySerializer
-
 from .base_use_case import CategoryUseCaseBase
 
 
@@ -27,8 +25,6 @@ class ListCategoriesUseCase(CategoryUseCaseBase):
 
 
 class TreeCategoriesUseCase(ListCategoriesUseCase):
-    def __init__(self, service=None, serializer=TreeCategorySerializer):
-        super().__init__(service=service, serializer=serializer)
 
     def execute(self):
         categories = self.service.tree_categories()
@@ -36,8 +32,7 @@ class TreeCategoriesUseCase(ListCategoriesUseCase):
         self.set_tree_total_prices(tree)
         return self.serializer(instance=tree, many=True).data
 
-    @staticmethod
-    def build_category_tree(categories):
+    def build_category_tree(self, categories):
         category_dict = {category.id: category for category in categories}
         tree = []
 
