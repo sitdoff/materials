@@ -14,6 +14,7 @@ from core.api.v1.catalog.use_cases import (
     TreeCategoriesUseCase,
     UpdateByIdCategoryUseCase,
 )
+from core.apps.catalog.serializers.category import TreeCategorySerializer
 
 
 class CategoryListCreateView(APIView):
@@ -37,7 +38,7 @@ class CategoryListCreateView(APIView):
 
 class CategoryTreeCreateView(APIView):
     def get(self, request: Request):
-        use_case = TreeCategoriesUseCase()
+        use_case = TreeCategoriesUseCase(serializer=TreeCategorySerializer)
         categories = use_case.execute()
         return Response(data=categories, status=status.HTTP_200_OK)
 
