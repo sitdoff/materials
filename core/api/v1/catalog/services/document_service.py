@@ -9,11 +9,11 @@ class DocumentService(DocumentServiceBase):
         return document_data
 
     def save(self, data):
-        document = self.repository.save_file_in_db(**data)
+        document = self.repository.create(**data)
         return document
 
     def run_task(self, document_id):
         import_materials_from_xls.delay_on_commit(document_id)
 
     def get_document(self, target_id):
-        return self.repository.get_document(target_id)
+        return self.repository.get_by_id(target_id)
