@@ -7,7 +7,7 @@ from .base_storage import DocumentRepositoryBase
 
 
 class DocumentRepository(DocumentRepositoryBase):
-    def get_document(self, target_id: int):
+    def get_by_id(self, target_id: int):
         try:
             document = self.model.objects.get(pk=target_id)
             return document
@@ -25,7 +25,7 @@ class DocumentRepository(DocumentRepositoryBase):
 
         return {"title": file_name, "file_path": file_path}
 
-    def save_file_in_db(
+    def create(
         self,
         title: str,
         file_path,
@@ -39,3 +39,12 @@ class DocumentRepository(DocumentRepositoryBase):
         serializer.is_valid(raise_exception=True)
         document = serializer.save()
         return document
+
+    def list(self):
+        return self.model.objects.all()
+
+    def update_by_id(self, target_id, data):
+        pass
+
+    def delete(self, target_id):
+        pass
