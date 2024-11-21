@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 from core.apps.catalog.models import CategoryModel, DocumentModel, MaterialModel
 from core.apps.catalog.serializers import (
@@ -9,7 +9,26 @@ from core.apps.catalog.serializers import (
 
 
 class StorageBase(ABC):
-    pass
+
+    @abstractmethod
+    def create(self, data):
+        pass
+
+    @abstractmethod
+    def list(self, filters):
+        pass
+
+    @abstractmethod
+    def get_by_id(self, target_id):
+        pass
+
+    @abstractmethod
+    def update_by_id(self, target_id, data):
+        pass
+
+    @abstractmethod
+    def delete(self, target_id):
+        pass
 
 
 class MaterialRepositoryBase(StorageBase):
