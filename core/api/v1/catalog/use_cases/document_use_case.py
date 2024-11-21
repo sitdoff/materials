@@ -22,7 +22,7 @@ class UploadDocumentUseCase(DocumentUseCaseBase):
 class CheckDocumentStatusUseCase(DocumentUseCaseBase):
     def execute(self, document_id):
         try:
-            document = self.service.repository.get_document(document_id)
+            document = self.service.repository.get_by_id(document_id)
             serialized_document = self.serializer(instance=document).data
             return serialized_document
         except ObjectDoesNotExist as e:
