@@ -34,13 +34,13 @@ def test_upload_document(document_service, document_repository):
 def test_save(document_service, document_repository):
     document_data = {"title": "test_file.txt", "file_path": "/path/to/file"}
 
-    document_repository.save_file_in_db = mock.Mock(
+    document_repository.create = mock.Mock(
         return_value=DocumentModel(title=document_data["title"], file_path=document_data["file_path"])
     )
 
     document = document_service.save(document_data)
 
-    document_repository.save_file_in_db.assert_called_once_with(title="test_file.txt", file_path="/path/to/file")
+    document_repository.create.assert_called_once_with(title="test_file.txt", file_path="/path/to/file")
 
     document.title == document_data["title"]
     document.file_path == document_data["file_path"]
@@ -55,10 +55,10 @@ def test_run_task(document_service):
 
 @pytest.mark.django_db
 def test_get_document(document_service, document_repository):
-    document_repository.get_document = mock.Mock(
+    document_repository.get_by_id = mock.Mock(
         return_value=DocumentModel(title="test_file.txt", file_path="/path/to/file")
     )
     document = document_service.get_document(1)
-    document_repository.get_document.assert_called_once_with(1)
+    document_repository.get_by_id.assert_called_once_with(1)
     assert document.title == "test_file.txt"
     assert document.file_path == "/path/to/file"

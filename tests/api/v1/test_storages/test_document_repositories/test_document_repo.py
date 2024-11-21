@@ -21,14 +21,14 @@ def document_repository():
 @pytest.mark.django_db
 def test_get_document_success(document_repository):
     document = DocumentModel.objects.create(title="Test Document", file_path="/test/path")
-    retrieved_document = document_repository.get_document(document.id)
+    retrieved_document = document_repository.get_by_id(document.id)
     assert retrieved_document == document
 
 
 @pytest.mark.django_db
 def test_get_document_not_found(document_repository):
     with pytest.raises(DocumentModel.DoesNotExist):
-        document_repository.get_document(999)
+        document_repository.get_by_id(999)
 
 
 @mock.patch("core.api.v1.catalog.storages.os.makedirs")
@@ -56,7 +56,7 @@ def test_save_file(mock_datetime, mock_open, mock_makedirs, document_repository)
 
 
 @pytest.mark.django_db
-def test_save_file_in_db_success(document_repository):
+def test_create_success(document_repository):
     title = "Test Document"
     file_path = "/test/path"
 
@@ -67,7 +67,7 @@ def test_save_file_in_db_success(document_repository):
     document_repository.serializer = mock.MagicMock()
     document_repository.serializer.return_value = mock_serializer
 
-    document = document_repository.save_file_in_db(title, file_path)
+    document = document_repository.create(title, file_path)
 
     mock_serializer.is_valid.assert_called_once_with(raise_exception=True)
     assert document.title == title
@@ -75,7 +75,7 @@ def test_save_file_in_db_success(document_repository):
 
 
 @pytest.mark.django_db
-def test_save_file_in_db_invalid_data(document_repository):
+def test_create_invalid_data(document_repository):
     mock_serializer = mock.Mock()
     mock_serializer.is_valid.side_effect = ValidationError("Invalid data")
 
@@ -83,4 +83,4 @@ def test_save_file_in_db_invalid_data(document_repository):
     document_repository.serializer.return_value = mock_serializer
 
     with pytest.raises(ValidationError, match="Invalid data"):
-        document_repository.save_file_in_db("Invalid Title", "/invalid/path")
+        document_repository.create("Invalid Title", "/invalid/path")
