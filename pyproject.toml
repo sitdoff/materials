@@ -50,6 +50,8 @@ pytest = "^8.3.3"
 pytest-django = "^4.9.0"
 gunicorn = "^23.0.0"
 whitenoise = "^6.8.2"
+boto3 = "^1.35.67"
+django-storages = "^1.14.4"
 
 
 [build-system]
