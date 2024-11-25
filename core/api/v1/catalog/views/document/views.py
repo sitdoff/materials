@@ -13,9 +13,8 @@ from core.api.v1.catalog.use_cases import (
 class DocumentUploadView(APIView):
     def post(self, request: Response):
         use_case = UploadDocumentUseCase()
-        file = request.FILES["file"]
         try:
-            document_data = use_case.execute(file)
+            document_data = use_case.execute(request.data)
             return Response(data=document_data, status=status.HTTP_200_OK)
         except ValidationError as e:
             return Response(data={"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
