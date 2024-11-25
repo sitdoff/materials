@@ -11,7 +11,7 @@ services:
             - postgres
             - redis
         volumes:
-            - like_s3:/app/documents
-
-volumes:
-    like_s3:
+            # - like_s3:/app/documents
+            - ../:/app/
+# volumes:
+# like_s3:
