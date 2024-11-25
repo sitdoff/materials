@@ -8,7 +8,7 @@ class UploadDocumentUseCase(DocumentUseCaseBase):
     def execute(self, data):
         try:
             document = self.service.save(data)
-            # self.service.run_task(document.pk)
+            self.service.run_task(document.pk)
             serialized_document = self.serializer(instance=document).data
             serialized_document["check_status"] = reverse(
                 "api:v1:catalog:documents:check-status", kwargs={"document_id": serialized_document["id"]}
