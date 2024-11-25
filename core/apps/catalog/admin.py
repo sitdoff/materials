@@ -16,4 +16,4 @@ class CategoryModelAdmin(MPTTModelAdmin):
 
 @admin.register(DocumentModel)
 class DocumentModelAdmin(admin.ModelAdmin):
-    list_display = ("title", "file_path", "status", "created_at")
+    list_display = ("file", "status", "created_at")
