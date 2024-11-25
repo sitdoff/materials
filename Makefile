@@ -8,6 +8,7 @@ LOGS = docker logs
 ENV = --env-file .env
 MANAGE_PY = python manage.py
 CELERY_FILE = compose/celery.yaml
+NGINX_FILE = compose/nginx.yaml
 
 .PHONY: storages
 storages: ## Поднять хранилища данных
@@ -27,11 +28,11 @@ storages-logs: ## Показать логи Postgres
 
 .PHONY: app
 app: ## Запуск приложения в контейнере
-		${DC} -f ${APP_FILE} -f ${STORAGES_FILE} -f ${CELERY_FILE} ${ENV} up -d
+		${DC} -f ${APP_FILE} -f ${STORAGES_FILE} -f ${CELERY_FILE} -f ${NGINX_FILE} ${ENV} up -d
 
 .PHONY: app-rebuild
 app-rebuild: ## Запуск приложения в контейнере с ребилдом контейнера
-		${DC} -f ${APP_FILE} -f ${STORAGES_FILE} -f ${CELERY_FILE} ${ENV} up -d --build
+		${DC} -f ${APP_FILE} -f ${STORAGES_FILE} -f ${CELERY_FILE} -f ${NGINX_FILE} ${ENV} up -d --build
 
 .PHONY: app-logs
 app-logs: ## Показать логи приложения в контейнере
@@ -39,7 +40,7 @@ app-logs: ## Показать логи приложения в контейне�
 
 .PHONY: app-down
 app-down: ## Остановить приложение в контейнере
-		${DC} -f ${APP_FILE} -f ${STORAGES_FILE} -f ${CELERY_FILE} down
+		${DC} -f ${APP_FILE} -f ${STORAGES_FILE} -f ${CELERY_FILE} -f ${NGINX_FILE} down
 
 .PHONY: migrations
 migrations: ## Создание миграций в контейнере
