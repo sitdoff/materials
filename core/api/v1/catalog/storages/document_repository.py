@@ -1,7 +1,10 @@
-import os
 from datetime import datetime
 
-from core.project.settings.local import DOCUMENT_NAME_TIME_FORMAT, DOCUMENT_ROOT
+from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.exceptions import ValidationError
+
+from core.apps.catalog.serializers import DocumentSerializer
 
 from .base_storage import DocumentRepositoryBase
 
@@ -11,34 +14,20 @@ class DocumentRepository(DocumentRepositoryBase):
         try:
             document = self.model.objects.get(pk=target_id)
             return document
-        except self.model.DoesNotExist as e:
+        except ObjectDoesNotExist as e:
             raise e
 
-    def save_file(self, file_object):
-        os.makedirs(DOCUMENT_ROOT, exist_ok=True)
-        file_name = f"{datetime.now().strftime(DOCUMENT_NAME_TIME_FORMAT)}_{file_object.name}"
-        file_path = os.path.join(DOCUMENT_ROOT, file_name)
-
-        with open(file_path, "wb+") as file:
-            for chunk in file_object.chunks():
-                file.write(chunk)
-
-        return {"title": file_name, "file_path": file_path}
-
-    def create(
-        self,
-        title: str,
-        file_path,
-    ):
-        serializer = self.serializer(
-            data={
-                "title": title,
-                "file_path": file_path,
-            }
-        )
-        serializer.is_valid(raise_exception=True)
-        document = serializer.save()
-        return document
+    def create(self, data):
+        print(data)
+        file_name = f"{datetime.now().strftime(settings.UPLOAD_FILE_NAME_TIME_FORMAT)}_{data['file'].name}"
+        data["file"].name = file_name
+        serializer = DocumentSerializer(data=data)
+        try:
+            if serializer.is_valid():
+                document = serializer.save()  # Файл загружается в S3
+                return document
+        except ValidationError as e:
+            raise e
 
     def list(self):
         return self.model.objects.all()
