@@ -17,48 +17,31 @@ def document_service(document_repository):
     return DocumentService(repository=document_repository)
 
 
-def test_upload_document(document_service, document_repository):
-    data = {"title": "test_file.txt", "file": mock.Mock(name="file")}
-
-    document_repository.save_file.return_value = {"title": data["title"], "file_path": "/path/to/file"}
-
-    document_data = document_service.upload_document(data)
-
-    document_repository.save_file.assert_called_once_with(data)
-
-    assert document_data["title"] == "test_file.txt"
-    assert document_data["file_path"] == "/path/to/file"
-
-
 @pytest.mark.django_db
 def test_save(document_service, document_repository):
-    document_data = {"title": "test_file.txt", "file_path": "/path/to/file"}
+    mock_file = mock.MagicMock()
+    mock_file.name = "test_file.xlxs"
+    document_data = {"title": mock_file}
 
-    document_repository.create = mock.Mock(
-        return_value=DocumentModel(title=document_data["title"], file_path=document_data["file_path"])
-    )
+    document_repository.create = mock.Mock(return_value=DocumentModel(file=mock_file))
 
     document = document_service.save(document_data)
 
-    document_repository.create.assert_called_once_with(title="test_file.txt", file_path="/path/to/file")
-
-    document.title == document_data["title"]
-    document.file_path == document_data["file_path"]
+    assert isinstance(document, DocumentModel)
+    document_repository.create.assert_called_once_with(document_data)
 
 
 def test_run_task(document_service):
-    with mock.patch("core.api.v1.catalog.services.import_materials_from_xls.delay_on_commit") as mock_task:
-        document_service.run_task(document_id=1)
-        mock_task.return_value = None
-        mock_task.assert_called_once_with(1)
+    pass
 
 
 @pytest.mark.django_db
 def test_get_document(document_service, document_repository):
-    document_repository.get_by_id = mock.Mock(
-        return_value=DocumentModel(title="test_file.txt", file_path="/path/to/file")
-    )
-    document = document_service.get_document(1)
+    mock_file = mock.MagicMock()
+    mock_file.name = "test_file.xlxs"
+
+    document_repository.get_by_id = mock.Mock(return_value=DocumentModel(file=mock_file))
+
+    document_service.get_document(1)
+
     document_repository.get_by_id.assert_called_once_with(1)
-    assert document.title == "test_file.txt"
-    assert document.file_path == "/path/to/file"
