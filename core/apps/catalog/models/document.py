@@ -10,8 +10,7 @@ class DocumentModel(TimedBaseModel):
         SUCCESS = "success", "Успешно обработан"
         ERROR = "error", "Ошибка обработки"
 
-    title = models.CharField(max_length=255, verbose_name="Наименование документа")
-    file_path = models.CharField(max_length=1024, verbose_name="Файл документа")
+    file = models.FileField(upload_to="uploads/", verbose_name="Файл документа")
     status = models.CharField(
         max_length=30,
         choices=Status.choices,
