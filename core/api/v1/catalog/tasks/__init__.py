@@ -1,1 +1,1 @@
-from .import_materals_from_xlsx import import_materials_from_xls
+from .import_materials_from_xlsx import import_materials_from_xls

@@ -1,3 +1,8 @@
+import os
+import tempfile
+
+import boto3
+import environ
 import openpyxl
 from celery import shared_task
 from django.db import IntegrityError, transaction
@@ -38,27 +43,51 @@ def get_valid_materials(materials_data):
     return valid_materials
 
 
+def get_s3_data_from_env():
+    env = environ.Env()
+
+    s3 = boto3.client(
+        "s3",
+        aws_access_key_id=env("S3_ACCESS_KEY"),
+        aws_secret_access_key=env("S3_SECRET_KEY"),
+        endpoint_url=env("MINIO_URL"),
+    )
+
+    bucket_name = env("S3_BUCKET")
+
+    return s3, bucket_name
+
+
 @shared_task
 def import_materials_from_xls(document_id: int):
+    s3, bucket_name = get_s3_data_from_env()
+
     document = DocumentModel.objects.get(pk=document_id)
-    file_path = document.file_path
     document.status = DocumentModel.Status.PROCESSING
     document.save()
 
-    try:
-        workbook = openpyxl.load_workbook(file_path)
-        sheet = workbook.active
-    except FileNotFoundError as e:
-        document.status = DocumentModel.Status.ERROR
-        document.save()
-        raise e
+    file_path = document.file.name
 
-    try:
-        materials_data = get_data_from_sheet(sheet)
-    except Exception as e:
-        document.status = DocumentModel.Status.ERROR
-        document.save()
-        raise e
+    response = s3.get_object(Bucket=bucket_name, Key=file_path)
+
+    with tempfile.NamedTemporaryFile(delete=True, suffix=".xlsx") as tmp_file:
+        tmp_file.write(response["Body"].read())
+        tmp_file_path = tmp_file.name
+
+        try:
+            workbook = openpyxl.load_workbook(tmp_file_path)
+            sheet = workbook.active
+        except FileNotFoundError as e:
+            document.status = DocumentModel.Status.ERROR
+            document.save()
+            raise e
+
+        try:
+            materials_data = get_data_from_sheet(sheet)
+        except Exception as e:
+            document.status = DocumentModel.Status.ERROR
+            document.save()
+            raise e
 
     try:
         with transaction.atomic():
