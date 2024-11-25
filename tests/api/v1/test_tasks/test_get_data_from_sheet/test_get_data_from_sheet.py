@@ -1,6 +1,6 @@
 from unittest import mock
 
-from core.api.v1.catalog.tasks.import_materals_from_xlsx import get_data_from_sheet
+from core.api.v1.catalog.tasks.import_materials_from_xlsx import get_data_from_sheet
 
 
 def test_get_data_from_sheet():
