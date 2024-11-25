@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     # batts
     "rest_framework",
     "mptt",
+    "storages",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -61,6 +63,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "core.project.urls"
@@ -134,7 +137,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = f"localhost:9000/{env('S3_BUCKET')}/"
 STATIC_ROOT = BASE_DIR / "static"
 
 # Default primary key field type
@@ -165,10 +168,8 @@ LOGGING = {
     },
 }
 
-DOCUMENT_ROOT = BASE_DIR / "documents"
-DOCUMENT_NAME_TIME_FORMAT = "%d%m%Y_%H%M%S"
 
-CELERY_BROKER_URL = f"redis://{env.str("REDIS_HOST")}:{env.int("REDIS_PORT")}/0"
+CELERY_BROKER_URL = f"redis://{env.str("REDIS_HOST")}:{env.int("REDIS_PORT")}/"
 
 # CELERY_RESULT_BACKEND = "redis://redis:6379/0"
 CELERY_ACCEPT_CONTENT = ["json"]
@@ -179,4 +180,34 @@ CELERY_BROKER_TRANSPORT_OPTIONS = {
     "interval_start": 0.1,
     "interval_step": 0.5,
     "interval_max": 60.0,
+}
+
+# S3
+UPLOAD_FILE_NAME_TIME_FORMAT = "%d%m%Y_%H%M%S"
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "access_key": env("S3_ACCESS_KEY"),
+            "secret_key": env("S3_SECRET_KEY"),
+            "bucket_name": env("S3_BUCKET"),
+            "region_name": "us-east-1",
+            "endpoint_url": env("MINIO_URL"),
+            "default_acl": None,
+            "querystring_auth": False,
+            "file_overwrite": False,
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "access_key": env("S3_ACCESS_KEY"),
+            "secret_key": env("S3_SECRET_KEY"),
+            "bucket_name": env("S3_BUCKET"),
+            "endpoint_url": env("MINIO_URL"),
+            "default_acl": "public-read",
+            "url_protocol": "http:",
+            "custom_domain": f"localhost:9000/{env("S3_BUCKET")}",
+        },
+    },
 }
