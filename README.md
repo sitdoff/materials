@@ -8,7 +8,8 @@ API каталога материалов с древовидной структ
 -   **База данных:** PostgreSQL
 -   **Обработка задач:** Celery
 -   **Брокер сообщений:** Redis
--   **HTTP-сервер:** Gunicorn
+-   **S3-хранилище:** Minio
+-   **HTTP-сервер:** Gunicorn, Nginx
 -   **Тестирование:** Pytest
 -   **Контейнеризация:** Docker, Docker Compose
 
